@@ -10,7 +10,7 @@ param computeMaxNodes = 2
 // Enable AML Studio user access by setting your Entra object ID here.
 // Set to your Entra object ID (az ad signed-in-user show --query id -o tsv) to grant
 // AML Studio data-plane access (Storage Blob/File, Key Vault, ACR). Leave empty to skip.
-param userPrincipalId = ''
+param userPrincipalId = '95a2b7d7-c00b-488e-ae57-d6f0911d0c7f'
 
 // Set to true when role assignments already exist in Azure to avoid RoleAssignmentExists errors.
 // Set to false only when deploying to a brand new environment for the first time.

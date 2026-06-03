@@ -10,7 +10,7 @@ param deployEndpointIdentity = true
 
 // Set to your Entra object ID (az ad signed-in-user show --query id -o tsv) to grant
 // AML Studio data-plane access (Storage Blob/File, Key Vault, ACR). Leave empty to skip.
-param userPrincipalId = ''
+param userPrincipalId = '95a2b7d7-c00b-488e-ae57-d6f0911d0c7f'
 param acrSku = 'Standard'
 param logRetentionDays = 90
 
