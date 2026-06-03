@@ -60,11 +60,13 @@ jobs:
             group=rg-${{ env.PROJECT }}-dev \
             workspace=${{ env.DEV_WORKSPACE }}
 
-      - name: Ensure environment exists in Dev workspace
+      - name: Ensure environment exists in shared registry
         run: |
+          # Environment lives in the registry so all workspaces (dev/test/prod) can resolve it.
           az ml environment create \
             --file ${{ env.MLOPS_DIR }}/train/train-env.yml \
-            || echo "Environment version already exists in workspace"
+            --registry-name ${{ env.REGISTRY_NAME }} \
+            || echo "Environment version already exists in registry"
 
       - name: Register Components to Dev workspace
         run: |
@@ -183,15 +185,10 @@ jobs:
       - name: Install ML Extension
         run: az extension add -n ml --yes
 
-      - name: Promote Environment to Registry
+      - name: Promote Components to Registry
         run: |
-          az ml environment create \
-            --file ${{ env.MLOPS_DIR }}/train/train-env.yml \
-            --registry-name ${{ env.REGISTRY_NAME }} \
-            || echo "Environment version already exists in registry"
-
-      - name: Register Components to Registry
-        run: |
+          # Environment is already in the registry (created in train-dev stage).
+          # Only components need promotion here.
           for comp in prep train evaluate register; do
             az ml component create \
               --file ${{ env.MLOPS_DIR }}/components/$comp.yml \
